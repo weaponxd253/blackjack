@@ -1,0 +1,246 @@
+:root {
+    --black: #000000;
+    --red: #FF0000;
+    --gold: #FFD700;
+    --green: #006400;
+    --white: #FFFFFF;
+    --silver: #C0C0C0;
+    --light-gray: #D3D3D3;
+    --dark-bg: #0a0a0a;
+    --dark-container-bg: #222;
+    --light-bg: #f2f2f2; /* Slightly darker light background for better contrast */
+    --light-container-bg: #ffffff;
+    --light-text: #333333; /* Darker text for better readability */
+    --dark-text: #f3f3f3;
+    --gold-dark-shadow: #b8860b; /* Darker shade of gold for better visibility */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--dark-bg);
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+    color: var(--dark-text);
+}
+
+.container {
+    text-align: center;
+    background: var(--dark-container-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    width: 100%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, .instructions, .results, #result-message, #dealer-score, #player-score, .scoreboard {
+    color: var(--gold);
+    transition: color 0.3s;
+    text-shadow: 0 0 5px var(--gold), 0 0 10px var(--gold), 0 0 15px var(--gold);
+}
+
+.instructions {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--gold);
+    color: var(--black);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 15px var(--red), 0 0 25px var(--red), 0 0 35px var(--red);
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 5px;
+    flex: 1 1 calc(40% - 10px);
+}
+
+button:hover {
+    background-color: var(--red);
+    transform: translateY(-2px);
+    color: var(--white);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 15px var(--gold), 0 0 25px var(--gold), 0 0 35px var(--gold);
+}
+
+button:disabled {
+    background-color: var(--light-gray);
+    cursor: not-allowed;
+    color: var(--black);
+}
+
+#theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: var(--gold);
+    color: var(--black);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#theme-toggle:hover {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    color: var(--white);
+}
+
+.dealer-container, .player-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cards-container .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100px;
+    max-height: 160px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.cards-container .card.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cards-container p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: var(--white);
+    text-align: center;
+    transition: color 0.3s;
+}
+
+.results {
+    margin-top: 20px;
+    color: var(--gold);
+}
+
+.scoreboard {
+    margin-top: 20px;
+    font-size: 18px;
+    color: var(--gold);
+    transition: color 0.3s;
+}
+
+body.light {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+body.light .container {
+    background-color: var(--light-container-bg);
+}
+
+body.light h1, body.light h2, body.light .instructions, body.light .results, body.light #result-message, body.light #dealer-score, body.light #player-score, body.light .scoreboard {
+    color: var(--light-text);
+    text-shadow: 0 0 5px var(--light-text), 0 0 10px var(--light-text), 0 0 15px var(--light-text);
+}
+
+body.light button {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+body.light button:hover {
+    background-color: var(--gold);
+    color: var(--black);
+}
+
+body.light #theme-toggle {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+body.light #theme-toggle:hover {
+    background-color: var(--gold);
+    color: var(--black);
+}
+
+@media (min-width: 768px) {
+    .game-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .dealer-container, .player-container {
+        width: 45%;
+        margin-bottom: 0;
+    }
+
+    .button-container {
+        justify-content: space-between;
+    }
+
+    button {
+        flex: 1 1 auto;
+        margin: 10px;
+    }
+}
+
+#winning-message {
+    font-size: 24px;
+    color: var(--red);
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid var(--red);
+    border-radius: 5px;
+    background-color: var(--black);
+    display: none;
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+.winner {
+    background-color: var(--gold);
+    color: var(--black);
+    border: 2px solid var(--red);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.winner .highlight {
+    animation: flash 1s infinite;
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}

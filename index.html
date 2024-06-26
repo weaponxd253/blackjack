@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Blackjack Game</h1>
+        <button onclick="toggleTheme()" id="theme-toggle">Switch to Dark Theme</button>
+        <p class="instructions">Click "Start Game" to begin. Hit to draw a new card. Stand to end your turn and let the dealer play.</p>
+        <div class="game-container">
+            <div class="dealer-container">
+                <h2>Dealer's Hand</h2>
+                <div id="dealer-cards" class="cards-container"></div>
+                <p id="dealer-score">Score: 0</p>
+            </div>
+            <div class="player-container">
+                <h2>Player's Hand</h2>
+                <div id="player-cards" class="cards-container"></div>
+                <p id="player-score">Score: 0</p>
+            </div>
+        </div>
+        <div class="scoreboard">
+            <h2>Scoreboard</h2>
+            <p id="player-total">Player's Total: 0</p>
+            <p id="dealer-total">Dealer's Total: 0</p>
+        </div>
+        <div class="button-container">
+            <button onclick="startGame()">Start Game</button>
+            <button onclick="hit()" id="hit-button" disabled>Hit</button>
+            <button onclick="stand()" id="stand-button" disabled>Stand</button>
+            <button onclick="resetGame()">Reset Game</button>
+        </div>
+        <div class="results">
+            <h2>Results</h2>
+            <p id="result-message"></p>
+            <div id="winning-message"></div>
+        </div>
+    </div>
+    <script src="script.js"></script> <!-- Corrected file name -->
+</body>
+</html>
