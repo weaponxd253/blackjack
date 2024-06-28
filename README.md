@@ -8,9 +8,6 @@ This is a web-based Blackjack game that allows players to play the classic card 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Running Tests](#running-tests)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -46,32 +43,4 @@ To run this project locally, follow these steps:
 3. Use the "Hit" button to draw a new card, the "Stand" button to end your turn, and the "Reset Game" button to restart the game.
 4. Switch between light and dark themes using the "Switch to Dark Theme" button.
 
-## Running Tests
 
-This project uses Jest for unit testing. To run the tests, follow these steps:
-
-1. Install the required dependencies:
-
-    ```bash
-    npm install
-    ```
-
-2. Run the tests:
-
-    ```bash
-    npx jest
-    ```
-
-The tests are defined in the `script.test.js` file and cover the main functionalities of the game.
-
-## Project Structure
-
-```plaintext
-blackjack-game/
-│
-├── index.html           # Main HTML file
-├── script.js            # Main JavaScript file
-├── styles.css           # Main CSS file
-├── script.test.js       # Unit tests for the JavaScript functions
-├── README.md            # Project documentation
-└── package.json         # Project configuration and dependencies for Jest
