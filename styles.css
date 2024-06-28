@@ -8,11 +8,11 @@
     --light-gray: #D3D3D3;
     --dark-bg: #0a0a0a;
     --dark-container-bg: #222;
-    --light-bg: #f2f2f2; /* Slightly darker light background for better contrast */
+    --light-bg: #f2f2f2; 
     --light-container-bg: #ffffff;
-    --light-text: #333333; /* Darker text for better readability */
+    --light-text: #333333;
     --dark-text: #f3f3f3;
-    --gold-dark-shadow: #b8860b; /* Darker shade of gold for better visibility */
+    --gold-dark-shadow: #b8860b;
 }
 
 body {
@@ -38,7 +38,51 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-h1, h2, .instructions, .results, #result-message, #dealer-score, #player-score, .scoreboard {
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+header h1 {
+    flex: 1;
+}
+
+header .buttons {
+    display: flex;
+    gap: 10px;
+}
+
+header .speed-control {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+header button,
+header .speed-control input {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: var(--gold);
+    color: var(--black);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+    margin-right: 10px;
+}
+
+header button:hover,
+header .speed-control input:hover {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+h1, h2, .instructions, .results, #result-message, #dealer-score, #player-score, .scoreboard, .leaderboard {
     color: var(--gold);
     transition: color 0.3s;
     text-shadow: 0 0 5px var(--gold), 0 0 10px var(--gold), 0 0 15px var(--gold);
@@ -64,7 +108,7 @@ button {
     color: var(--black);
     border: none;
     border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 15px var(--red), 0 0 25px var(--red), 0 0 35px var(--red);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, transform 0.3s;
     margin: 5px;
     flex: 1 1 calc(40% - 10px);
@@ -74,7 +118,6 @@ button:hover {
     background-color: var(--red);
     transform: translateY(-2px);
     color: var(--white);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 15px var(--gold), 0 0 25px var(--gold), 0 0 35px var(--gold);
 }
 
 button:disabled {
@@ -83,11 +126,9 @@ button:disabled {
     color: var(--black);
 }
 
-#theme-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 10px;
+#theme-toggle,
+#sound-toggle {
+    padding: 10px 20px;
     font-size: 14px;
     background-color: var(--gold);
     color: var(--black);
@@ -98,7 +139,8 @@ button:disabled {
     transition: background-color 0.3s, color 0.3s;
 }
 
-#theme-toggle:hover {
+#theme-toggle:hover,
+#sound-toggle:hover {
     background-color: var(--red);
     color: var(--white);
 }
@@ -112,7 +154,8 @@ button:disabled {
     color: var(--white);
 }
 
-.dealer-container, .player-container {
+.dealer-container,
+.player-container {
     width: 100%;
     margin-bottom: 20px;
 }
@@ -150,10 +193,11 @@ button:disabled {
 
 .results {
     margin-top: 20px;
-    color: var(--gold);
+    color: var (--gold);
 }
 
-.scoreboard {
+.scoreboard,
+.leaderboard {
     margin-top: 20px;
     font-size: 18px;
     color: var(--gold);
@@ -169,29 +213,41 @@ body.light .container {
     background-color: var(--light-container-bg);
 }
 
-body.light h1, body.light h2, body.light .instructions, body.light .results, body.light #result-message, body.light #dealer-score, body.light #player-score, body.light .scoreboard {
-    color: var(--light-text);
-    text-shadow: 0 0 5px var(--light-text), 0 0 10px var(--light-text), 0 0 15px var(--light-text);
+body.light h1,
+body.light h2,
+body.light .instructions,
+body.light .results,
+body.light #result-message,
+body.light #dealer-score,
+body.light #player-score,
+body.light .scoreboard,
+body.light .leaderboard {
+    color: var (--light-text);
+    text-shadow: 0 0 5px var(--light-text),
+        0 0 10px var(--light-text),
+        0 0 15px var(--light-text);
 }
 
 body.light button {
-    background-color: var(--red);
-    color: var(--white);
+    background-color: var (--red);
+    color: var (--white);
 }
 
 body.light button:hover {
-    background-color: var(--gold);
-    color: var(--black);
+    background-color: var (--gold);
+    color: var (--black);
 }
 
-body.light #theme-toggle {
-    background-color: var(--red);
-    color: var(--white);
+body.light #theme-toggle,
+body.light #sound-toggle {
+    background-color: var (--red);
+    color: var (--white);
 }
 
-body.light #theme-toggle:hover {
-    background-color: var(--gold);
-    color: var(--black);
+body.light #theme-toggle:hover,
+body.light #sound-toggle:hover {
+    background-color: var (--gold);
+    color: var (--black);
 }
 
 @media (min-width: 768px) {
@@ -200,7 +256,8 @@ body.light #theme-toggle:hover {
         justify-content: space-between;
     }
 
-    .dealer-container, .player-container {
+    .dealer-container,
+    .player-container {
         width: 45%;
         margin-bottom: 0;
     }
@@ -217,20 +274,20 @@ body.light #theme-toggle:hover {
 
 #winning-message {
     font-size: 24px;
-    color: var(--red);
+    color: var (--red);
     margin-top: 20px;
     padding: 10px;
-    border: 2px solid var(--red);
+    border: 2px solid var (--red);
     border-radius: 5px;
-    background-color: var(--black);
+    background-color: var (--black);
     display: none;
     transition: transform 0.5s, opacity 0.5s;
 }
 
 .winner {
-    background-color: var(--gold);
-    color: var(--black);
-    border: 2px solid var(--red);
+    background-color: var (--gold);
+    color: var (--black);
+    border: 2px solid var (--red);
     padding: 10px;
     border-radius: 5px;
 }
@@ -240,7 +297,13 @@ body.light #theme-toggle:hover {
 }
 
 @keyframes flash {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
 }

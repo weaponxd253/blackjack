@@ -4,6 +4,9 @@ let deckId = '';
 let playerScore = 0;
 let dealerScore = 0;
 let gameActive = false;
+let soundEnabled = true;
+let leaderboard = [];
+let animationSpeed = 1;
 
 function resetHands() {
     playerHand = [];
@@ -56,8 +59,8 @@ async function dealInitialCards() {
         playerHand.push(cards[0], cards[2]);
         dealerHand.push(cards[1], cards[3]);
 
-        updateHandDisplay(playerHand, playerCardsElement);
-        updateHandDisplay(dealerHand, dealerCardsElement);
+        await animateCardDealing(playerHand, playerCardsElement);
+        await animateCardDealing(dealerHand, dealerCardsElement);
 
         playerScore = calculateHandValue(playerHand);
         dealerScore = calculateHandValue(dealerHand);
@@ -78,24 +81,31 @@ async function dealInitialCards() {
     }
 }
 
-function updateHandDisplay(hand, element) {
-    element.innerHTML = '';
-    hand.forEach(card => {
-        const cardContainer = document.createElement('div');
-        cardContainer.classList.add('card', 'show');
+function animateCardDealing(hand, element) {
+    return new Promise(resolve => {
+        hand.forEach((card, index) => {
+            setTimeout(() => {
+                const cardContainer = document.createElement('div');
+                cardContainer.classList.add('card', 'show');
 
-        const cardText = document.createElement('p');
-        cardText.textContent = `${card.value} of ${card.suit}`;
+                const cardText = document.createElement('p');
+                cardText.textContent = `${card.value} of ${card.suit}`;
 
-        const cardImage = document.createElement('img');
-        cardImage.src = card.image;
-        cardImage.alt = `${card.value} of ${card.suit}`;
+                const cardImage = document.createElement('img');
+                cardImage.src = card.image;
+                cardImage.alt = `${card.value} of ${card.suit}`;
 
-        cardContainer.appendChild(cardText);
-        cardContainer.appendChild(cardImage);
-        element.appendChild(cardContainer);
+                cardContainer.appendChild(cardText);
+                cardContainer.appendChild(cardImage);
+                element.appendChild(cardContainer);
 
-        gsap.fromTo(cardContainer, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1 });
+                gsap.fromTo(cardContainer, { opacity: 0, x: -100 }, { opacity: 1, x: 0, duration: 1 / animationSpeed });
+                
+                if (index === hand.length - 1) {
+                    setTimeout(resolve, 1000 / animationSpeed);
+                }
+            }, index * (500 / animationSpeed));
+        });
     });
 }
 
@@ -125,6 +135,7 @@ function calculateHandValue(hand) {
 async function hit() {
     if (!gameActive) return;
 
+    playSound('card-draw-sound');
     const playerCardsElement = document.getElementById('player-cards');
 
     try {
@@ -133,7 +144,7 @@ async function hit() {
         const card = data.cards[0];
 
         playerHand.push(card);
-        updateHandDisplay(playerHand, playerCardsElement);
+        await animateCardDealing([card], playerCardsElement);
 
         playerScore = calculateHandValue(playerHand);
         document.getElementById('player-score').textContent = `Score: ${playerScore}`;
@@ -163,7 +174,7 @@ async function stand() {
             const card = data.cards[0];
 
             dealerHand.push(card);
-            updateHandDisplay(dealerHand, dealerCardsElement);
+            await animateCardDealing([card], dealerCardsElement);
 
             dealerScore = calculateHandValue(dealerHand);
             document.getElementById('dealer-score').textContent = `Score: ${dealerScore}`;
@@ -200,6 +211,8 @@ function endGame(message, winner) {
     document.getElementById('stand-button').disabled = true;
 
     if (winner) {
+        playSound(winner === 'player' ? 'win-sound' : 'lose-sound');
+        updateLeaderboard(winner);
         winningMessage.textContent = `${winner.charAt(0).toUpperCase() + winner.slice(1)} wins!`;
         winningMessage.style.display = 'block';
         highlightWinner(winner);
@@ -222,6 +235,24 @@ function toggleTheme() {
     }
 }
 
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    const soundToggleButton = document.getElementById('sound-toggle');
+    soundToggleButton.textContent = soundEnabled ? 'Mute Sound' : 'Unmute Sound';
+}
+
+function playSound(id) {
+    if (soundEnabled) {
+        const sound = document.getElementById(id);
+        sound.play();
+    }
+}
+
+function updateSpeed(value) {
+    animationSpeed = value;
+    document.getElementById('speed-value').textContent = value;
+}
+
 function updateTotalScores() {
     document.getElementById('player-total').textContent = `Player's Total: ${playerScore}`;
     document.getElementById('dealer-total').textContent = `Dealer's Total: ${dealerScore}`;
@@ -241,6 +272,28 @@ function removeWinnerHighlight() {
     });
 }
 
+function updateLeaderboard(winner) {
+    const leaderboardList = document.getElementById('leaderboard-list');
+    const newEntry = document.createElement('li');
+    newEntry.textContent = `${winner} won at ${new Date().toLocaleTimeString()}`;
+    leaderboard.push(newEntry.textContent);
+    leaderboardList.appendChild(newEntry);
+
+    if (leaderboard.length > 10) {
+        leaderboardList.removeChild(leaderboardList.firstChild);
+        leaderboard.shift();
+    }
+
+    // Sort and highlight top players
+    leaderboard.sort((a, b) => a.score - b.score);
+    leaderboardList.innerHTML = '';
+    leaderboard.forEach(entry => {
+        const li = document.createElement('li');
+        li.textContent = entry;
+        leaderboardList.appendChild(li);
+    });
+}
+
 module.exports = {
     resetHands,
     calculateHandValue,
@@ -252,7 +305,11 @@ module.exports = {
     endGame,
     resetGame,
     toggleTheme,
+    toggleSound,
+    playSound,
+    updateSpeed,
     updateTotalScores,
     highlightWinner,
     removeWinnerHighlight,
+    updateLeaderboard,
 };
